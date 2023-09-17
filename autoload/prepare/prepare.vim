@@ -50,14 +50,17 @@ endfunction
 " 生成c代码
 function! s:gen_c_code()
     let lines = <sid>get_prepare_code("c")
-    call prepare#util#write_texts(lines)
+    let target = prepare#util#get_current_file_base_name()
+    let texts = prepare#util#replace_texts(lines, "snippet", target)
+    call prepare#util#write_texts(texts)
 endfunction
 
 " 生成cpp头文件代码
 function! s:gen_cpp_header_code()
     let lines = <sid>get_prepare_code("h")
     let target = prepare#util#get_current_file_base_name()
-    let texts = prepare#util#replace_texts(lines, "snippet", target)
+	let upstr=toupper(target)
+    let texts = prepare#util#replace_texts(lines, "snippet", upstr)
     call prepare#util#write_texts(texts)
 endfunction
 
